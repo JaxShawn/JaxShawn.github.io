@@ -1,0 +1,403 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>git——分布式管理系统的入门与进阶（一） | JaxShawn</title><meta name="keywords" content="git,分布式管理系统"><meta name="author" content="JaxShawn"><meta name="copyright" content="JaxShawn"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="git——分布式管理系统的入门与进阶（一）"><meta name="application-name" content="git——分布式管理系统的入门与进阶（一）"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="git——分布式管理系统的入门与进阶（一）"><meta property="og:url" content="https://jaxshawn.github.io/2023/10/31/git%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6%EF%BC%88%E4%B8%80%EF%BC%89/index.html"><meta property="og:site_name" content="JaxShawn"><meta property="og:description" content="版本控制什么是“版本控制”？它究竟有什么作用？ 版本控制是一种系统，它记录了一个或者若干个内容变化，使得我们可以查阅各个版本的变化。   有很多人会认为，只有源代码文件需要用到版本控制，但其实，你可以对任何类型的文件进行版本控制。 有了版本控制系统，我们就可以将项目或是某个文件回溯到过去某个时间点的"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg"><meta property="article:author" content="JaxShawn"><meta property="article:tag" content="精确，完美"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg"><meta name="description" content="版本控制什么是“版本控制”？它究竟有什么作用？ 版本控制是一种系统，它记录了一个或者若干个内容变化，使得我们可以查阅各个版本的变化。   有很多人会认为，只有源代码文件需要用到版本控制，但其实，你可以对任何类型的文件进行版本控制。 有了版本控制系统，我们就可以将项目或是某个文件回溯到过去某个时间点的"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://jaxshawn.github.io/2023/10/31/git%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6%EF%BC%88%E4%B8%80%EF%BC%89/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2023/09/03/125766904/ee23df8517f3c3e3efc4145658269c06_5714860933110284659.png"},
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: undefined,
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: JaxShawn","link":"链接: ","source":"来源: JaxShawn","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'JaxShawn',
+  title: 'git——分布式管理系统的入门与进阶（一）',
+  postAI: '',
+  pageFillDescription: '版本控制, 版本控制的发展历史, 两周时间完成Git, 配置用户名和邮件地址, 更多Git 配置, Git 颜色配置, Git忽略文件配置, Git 配置别名, 配置 git reset HEAD file, 配置 git log -1, Git 配置文件版本控制什么是版本控制它究竟有什么作用版本控制是一种系统它记录了一个或者若干个内容变化使得我们可以查阅各个版本的变化有很多人会认为只有源代码文件需要用到版本控制但其实你可以对任何类型的文件进行版本控制有了版本控制系统我们就可以将项目或是某个文件回溯到过去某个时间点的状态可以通过比较文件的变化细节查出最后是谁的修改导致出现的问题使用版本控制系统意味着即使你将所有文件乱删乱改一气也可以轻松恢复它之前的样子版本控制的发展历史本地版本控制系统其中一种为在硬盘上保存补丁集通过应用所有补丁可以计算出各个版本的文件内容目前由工程师维护集中化版本控制系统诸如以及有一个集中管理的服务器保存所有文件的修订版本缺点是中心服务器单点故障会导致谁都无法使用服务器的磁盘损坏时也会导致丢失项目的所有数据分布式版本控制系统即为其中一员客户端并不只提取最新版本的文件快照而是把代码仓库完整地镜像下来包括完整的历史记录每一次的克隆操作实际上都是一次对代码仓库的完整备份两周时间完成年系统的代码库之大已经让很难继续手工管理了于是花了两周时间自己用写了一个分布式版本控制系统这就是一个月之内系统的源码已经由管理了诞生以来日臻完善年网站上线了它为开源项目免费提供存储无数开源项目开始迁移至安装官方版本可以在官方网站下载打开然后选择相应的版本即可自带一个的工具来帮助设置控制外观和行为的配置变量接下来我们先学习如何通过命令来配置用户信息配置用户名和邮件地址安装完之后要做的第一件事就是设置你的用户名和邮件地址这一点很重要因为每一个提交都会使用这些信息它们会写入到你的每一次提交中不可更改你的用户名你的邮箱再次强调如果使用了选项那么该命令只需要运行一次因为之后无论你在该系统上做任何事情都会使用那些信息当你想针对特定项目使用不同的用户名称与邮件地址时可以在那个项目目录下运行没有选项的命令来配置如果想要检查你的配置可以使用命令来列出所有当时能找到的配置你可能会看到重复的变量名因为会从不同的文件中读取同一个配置例如与这种情况下会使用它找到的每一个变量的最后一个配置你可以通过输入来检查的某一项配置例如更多配置颜色配置到目前为止我们已经配置了和实际上还有很多可配置项比如让显示颜色会让命令输出看起来更醒目显示颜色忽略文件配置有些时候你必须把某些文件放到工作目录中但又不能提交它们比如保存了数据库密码的配置文件等等每次都会显示这种情况下就可以实用忽略特殊文件来很方便的解决这个问题首先我们在工作区的根目录下创建一个特殊的文件然后把要忽略的文件名填进去在每次进行提交的时候就会自动忽略这些文件配置别名除了通过配置忽略文件来提高时的便捷性外中还有一种可以让大家在敲入命令时偷懒的办法那就是配置别名配置比如在使用命令时我们可以通过配置别名的方式将其配置为这样在使用时是不是就比输入简单方便很多呢我们只需要敲一行命令告诉以后就表示当然还有别的命令可以简写很多人都用表示表示表示配置别名配置完成以上别名后以后提交就可以简写成参数是全局参数也就是这些命令在这台电脑的所有仓库下都可以使用配置再比如命令他可以把暂存区的修改撤销掉重新放回工作区既然是一个操作就可以配置一个别名当你敲入命令实际上执行的是配置配置一个让其显示最后一次提交信息这样用就能显示最近一次的提交配置文件这些自定义的配置文件通常都存放在仓库的文件中全局配置文件别名就在后面要删除别名直接把对应的行删掉即可而当前用户的配置文件放在用户主目录下的一个隐藏文件中用户配置文件配置别名也可以直接修改这个文件如果改错了可以删掉文件重新通过命令配置',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-19 23:13:53',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">JaxShawn</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/GPIO/" style="font-size: 1.05rem;">GPIO<sup>1</sup></a><a href="/tags/Inter-Integrated-Circuit%EF%BC%88%E5%86%85%E9%83%A8%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%EF%BC%89/" style="font-size: 1.05rem;">Inter-Integrated Circuit（内部集成电路）<sup>1</sup></a><a href="/tags/LCD%E5%B1%8F%E5%B9%95/" style="font-size: 1.05rem;">LCD屏幕<sup>1</sup></a><a href="/tags/M4%E5%86%85%E6%A0%B8/" style="font-size: 1.05rem;">M4内核<sup>1</sup></a><a href="/tags/Markdown/" style="font-size: 1.05rem;">Markdown<sup>1</sup></a><a href="/tags/OLED%E5%B1%8F%E5%B9%95/" style="font-size: 1.05rem;">OLED屏幕<sup>1</sup></a><a href="/tags/git/" style="font-size: 1.05rem;">git<sup>7</sup></a><a href="/tags/http-https/" style="font-size: 1.05rem;">http/https<sup>1</sup></a><a href="/tags/mqtt/" style="font-size: 1.05rem;">mqtt<sup>1</sup></a><a href="/tags/stm32/" style="font-size: 1.05rem;">stm32<sup>1</sup></a><a href="/tags/tcp-ip/" style="font-size: 1.05rem;">tcp/ip<sup>1</sup></a><a href="/tags/%E4%B8%BB%E9%A2%98%E5%92%8C%E8%B4%9F%E8%BD%BD/" style="font-size: 1.05rem;">主题和负载<sup>1</sup></a><a href="/tags/%E4%BB%8B%E7%BB%8D/" style="font-size: 1.05rem;">介绍<sup>1</sup></a><a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" style="font-size: 1.05rem;">分布式管理系统<sup>7</sup></a><a href="/tags/%E5%88%A0%E9%99%A4/" style="font-size: 1.05rem;">删除<sup>1</sup></a><a href="/tags/%E5%8F%91%E5%B8%83%E5%92%8C%E8%AE%A2%E9%98%85/" style="font-size: 1.05rem;">发布和订阅<sup>1</sup></a><a href="/tags/%E5%AF%84%E5%AD%98%E5%99%A8/" style="font-size: 1.05rem;">寄存器<sup>1</sup></a><a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" style="font-size: 1.05rem;">嵌入式<sup>1</sup></a><a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F/" style="font-size: 1.05rem;">嵌入式系统<sup>1</sup></a><a href="/tags/%E5%B7%A5%E4%BD%9C%E5%8C%BA/" style="font-size: 1.05rem;">工作区<sup>1</sup></a><a href="/tags/%E5%BF%83%E6%83%85/" style="font-size: 1.05rem;">心情<sup>1</sup></a><a href="/tags/%E5%BF%83%E7%90%86/" style="font-size: 1.05rem;">心理<sup>1</sup></a><a href="/tags/%E6%80%9D%E7%BB%B4%E6%96%B9%E5%BC%8F/" style="font-size: 1.05rem;">思维方式<sup>1</sup></a><a href="/tags/%E6%80%BB%E7%BA%BF%E5%8D%8F%E8%AE%AE/" style="font-size: 1.05rem;">总线协议<sup>1</sup></a><a href="/tags/%E6%92%A4%E9%94%80%E4%BF%AE%E6%94%B9/" style="font-size: 1.05rem;">撤销修改<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">教程<sup>1</sup></a><a href="/tags/%E6%96%B9%E6%B3%95%E6%8A%80%E5%B7%A7/" style="font-size: 1.05rem;">方法技巧<sup>1</sup></a><a href="/tags/%E6%9A%82%E5%AD%98%E5%8C%BA/" style="font-size: 1.05rem;">暂存区<sup>1</sup></a><a href="/tags/%E6%BA%90%E4%BB%A3%E7%A0%81/" style="font-size: 1.05rem;">源代码<sup>1</sup></a><a href="/tags/%E7%89%A9%E7%90%86%E5%B1%82/" style="font-size: 1.05rem;">物理层<sup>1</sup></a><a href="/tags/%E7%AE%A1%E7%90%86%E4%BF%AE%E6%94%B9/" style="font-size: 1.05rem;">管理修改<sup>1</sup></a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" style="font-size: 1.05rem;">系统编程<sup>1</sup></a><a href="/tags/%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93/" style="font-size: 1.05rem;">远程仓库<sup>1</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/12/"><span class="card-archive-list-date">十二月 2023</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/11/"><span class="card-archive-list-date">十一月 2023</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">6</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/10/"><span class="card-archive-list-date">十月 2023</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">9</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/07/"><span class="card-archive-list-date">七月 2023</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/06/"><span class="card-archive-list-date">六月 2023</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F/" itemprop="url">版本控制系统</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/git/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>git</span></a><a class="article-meta__tags" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>分布式管理系统</span></a></span></div></div><h1 class="post-title" itemprop="name headline">git——分布式管理系统的入门与进阶（一）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2023-10-31T01:18:11.000Z" title="发表于 2023-10-31 09:18:11">2023-10-31</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2024-09-19T15:13:53.419Z" title="更新于 2024-09-19 23:13:53">2024-09-19</time></span></div><div class="meta-secondline"><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为长沙"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>长沙</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src=""></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="https://jaxshawn.github.io/2023/10/31/git%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6%EF%BC%88%E4%B8%80%EF%BC%89/"><header><a class="post-meta-categories" href="/categories/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F/" itemprop="url">版本控制系统</a><a href="/tags/git/" tabindex="-1" itemprop="url">git</a><a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" tabindex="-1" itemprop="url">分布式管理系统</a><h1 id="CrawlerTitle" itemprop="name headline">git——分布式管理系统的入门与进阶（一）</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">JaxShawn</span><time itemprop="dateCreated datePublished" datetime="2023-10-31T01:18:11.000Z" title="发表于 2023-10-31 09:18:11">2023-10-31</time><time itemprop="dateCreated datePublished" datetime="2024-09-19T15:13:53.419Z" title="更新于 2024-09-19 23:13:53">2024-09-19</time></header><h2 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h2><p>什么是“版本控制”？它究竟有什么作用？</p>
+<p>版本控制是一种系统，它记录了一个或者若干个内容变化，使得我们可以查阅各个版本的变化。</p>
+<span id="more"></span>
+
+<p>有很多人会认为，只有源代码文件需要用到版本控制，但其实，你可以对任何类型的文件进行版本控制。</p>
+<p>有了版本控制系统，我们就可以将项目或是某个文件回溯到过去某个时间点的状态，可以通过比较文件的变化细节。查出最后是谁的修改导致出现的问题。使用版本控制系统意味着，即使你将所有文件乱删乱改一气，也可以轻松恢复它之前的样子。</p>
+<h2 id="版本控制的发展历史"><a href="#版本控制的发展历史" class="headerlink" title="版本控制的发展历史"></a>版本控制的发展历史</h2><ul>
+<li><p>本地版本控制系统：其中一种为RCS (Revision control system)，在硬盘上保存补丁集，通过应用所有补丁可以计算出各个版本的文件内容。<em>目前RCS由GNU工程师维护</em></p>
+</li>
+<li><p>集中化版本控制系统(Centralized Version Control Systems)：诸如CVS、Subversion以及Perforce，有一个集中管理的服务器，保存所有文件的修订版本。缺点是中心服务器单点故障会导致谁都无法使用，服务器的磁盘损坏时也会导致丢失项目的所有数据。</p>
+</li>
+<li><p>分布式版本控制系统(Distributed Version Control System)：Git即为其中一员。客户端并不只提取最新版本的文件快照， 而是把代码仓库完整地镜像下来，包括完整的历史记录。 每一次的克隆操作，实际上都是一次对代码仓库的完整备份。</p>
+</li>
+</ul>
+<h2 id="两周时间，完成Git"><a href="#两周时间，完成Git" class="headerlink" title="两周时间，完成Git"></a>两周时间，完成Git</h2><p>2005 年，Linux 系统的代码库之大已经让 Linus 很难继续手工管理了。</p>
+<p>于是，Linus 花了<strong>两周</strong>时间自己用 C 写了一个分布式版本控制系统，这就是 Git！一个月之内，Linux 系统的源码已经由 Git 管理了！<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://echobox-1307380937.cos.ap-shanghai.myqcloud.com/echo/202310311011327.jpg" alt="一个具有代表性的 git 会话，演示了存储库的初始化，以及文件和远程的添加。" style="zoom:50%;" /></p>
+<p>诞生以来，Git 日臻完善，2008年，GitHub 网站上线了，它为开源项目免费提供 Git 存储，无数开源项目开始迁移至 GitHub .</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Git-logo.svg/1920px-Git-logo.svg.png" alt="定义" style="zoom: 25%;" />
+## 安装Git
+官方版本可以在 Git 官方网站下载。 打开 https://git-scm.com/download/win，然后选择相应的版本即可。 
+
+<p><strong>git config</strong></p>
+<p>Git 自带一个 <code>git config</code> 的工具来帮助设置控制 Git 外观和行为的配置变量。</p>
+<p>接下来，我们先学习如何通过 <code>git config</code> 命令来配置 <strong>用户信息</strong></p>
+<h3 id="配置用户名和邮件地址"><a href="#配置用户名和邮件地址" class="headerlink" title="配置用户名和邮件地址"></a>配置用户名和邮件地址</h3><p>安装完 Git 之后，要做的第一件事就是设置你的用户名和邮件地址。 这一点很重要，因为每一个 Git 提交都会使用这些信息，它们会写入到你的每一次提交中，不可更改： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global  <span class="string">&quot;你的用户名&quot;</span> </span><br><span class="line">$ git config --global user.email 你的邮箱 </span><br></pre></td></tr></table></figure>
+<p>再次强调，如果使用了 <code>--global</code> 选项，那么该命令只需要运行一次，因为之后无论你在该系统上做任何事情， Git 都会使用那些信息。 &gt; 当你想针对特定项目使用不同的用户名称与邮件地址时，可以在那个项目目录下运行没有 <code>--global</code> 选项的命令来配置。</p>
+<p>如果想要检查你的配置，可以使用 <code>git config --list</code> 命令来列出所有 Git 当时能找到的配置。 </p>
+<p>你可能会看到重复的变量名，因为 Git 会从不同的文件中读取同一个配置（例如：<code>/etc/gitconfig</code> 与 <code>~/.gitconfig</code>）。 这种情况下，Git 会使用它找到的每一个变量的最后一个配置。 你可以通过输入 <code>git config ：</code> 来检查 Git 的某一项配置，例如： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git config user.name  </span><br></pre></td></tr></table></figure>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://echobox-1307380937.cos.ap-shanghai.myqcloud.com/echo/202310311050837.jpg" alt="Mona Lisa为作者设置的用户名，使用命令检查"></p>
+<h2 id="更多Git-配置"><a href="#更多Git-配置" class="headerlink" title="更多Git 配置"></a>更多Git 配置</h2><h3 id="Git-颜色配置"><a href="#Git-颜色配置" class="headerlink" title="Git 颜色配置"></a>Git 颜色配置</h3><p> 到目前为止，我们已经配置了 <code>user.name</code> 和 <code>user.email</code> ，实际上，Git 还有很多可配置项。 比如，让 Git 显示颜色，会让命令输出看起来更醒目：<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global color.ui <span class="literal">true</span> </span><br></pre></td></tr></table></figure><br> <strong>Git 显示颜色</strong></p>
+<h3 id="Git忽略文件配置"><a href="#Git忽略文件配置" class="headerlink" title="Git忽略文件配置"></a>Git忽略文件配置</h3><p>有些时候，你必须把某些文件放到 Git 工作目录中，但又不能提交它们，比如保存了数据库密码的配置文件等等，每次<code>git status</code>都会显示<code>Untracked files ...</code>，这种情况下，就可以实用忽略特殊文件 <code>.gitignore</code> 来很方便的解决这个问题。 首先我们在 Git 工作区的根目录下创建一个特殊的 <code>.gitignore</code>文件，然后把要忽略的文件名填进去，Git 在每次进行提交的时候就会自动忽略这些文件。 </p>
+<h3 id="Git-配置别名"><a href="#Git-配置别名" class="headerlink" title="Git 配置别名"></a>Git 配置别名</h3><p>除了通过 配置忽略文件 来提高<code>git commit</code> 时的便捷性外，Git 中还有一种可以让大家在敲入 Git 命令时偷懒的办法——那就是配置 Git 别名。<br><strong>配置 git status&#x2F;commit&#x2F;checkout&#x2F;branch</strong><br>比如在使用<code>git status</code>命令时，我们可以通过配置别名的方式将其配置为<code>git st</code>，这样在使用时是不是就比输入 <code>git status</code>简单方便很多呢？ 我们只需要敲一行命令，告诉 Git，以后<code>st</code>就表示<code>status</code>： <code>bash $ git config --global alias.st status </code> 当然还有别的命令可以简写，很多人都用<code>co</code>表示<code>checkout</code>，<code>ci</code>表示<code>commit</code>，<code>br</code>表示<code>branch</code>： </p>
+<p><strong>配置别名</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global alias.co checkout </span><br><span class="line">$ git config --global alias.ci commit </span><br><span class="line">$ git config --global alias.br branch </span><br></pre></td></tr></table></figure>
+<p>配置完成以上别名后，以后提交就可以简写成：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git ci -m <span class="string">&quot;sth.&quot;</span> </span><br></pre></td></tr></table></figure>
+<p><code>--global</code>参数是全局参数，也就是这些命令在这台电脑的所有 Git 仓库下都可以使用。 </p>
+<h3 id="配置-git-reset-HEAD-file"><a href="#配置-git-reset-HEAD-file" class="headerlink" title="配置 git reset HEAD file"></a>配置 git reset HEAD file</h3><p>再比如<code>git reset HEAD file</code>命令，他可以把暂存区的修改撤销掉（unstage），重新放回工作区。既然是一个<code>unstage</code>操作，就可以配置一个<code>unstage</code>别名： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global alias.unstage <span class="string">&#x27;reset HEAD&#x27;</span> </span><br></pre></td></tr></table></figure>
+<p>当你敲入命令： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git unstage test.py </span><br></pre></td></tr></table></figure>
+<p>实际上 Git 执行的是： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git reset HEAD test.py </span><br></pre></td></tr></table></figure>
+<h3 id="配置-git-log-1"><a href="#配置-git-log-1" class="headerlink" title="配置 git log -1"></a>配置 git log -1</h3><p>配置一个<code>git last</code>，让其显示最后一次提交信息： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global alias.last <span class="string">&#x27;log -1&#x27;</span> </span><br></pre></td></tr></table></figure>
+<p>这样，用git last就能显示最近一次的提交：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git last </span><br><span class="line">commit </span><br><span class="line">4aac6c7ee018f24d2dabfd01a1e09c77612e1a4e </span><br><span class="line">(HEAD -&gt; master) </span><br><span class="line">Author: </span><br><span class="line">Miykael_xxm Date: </span><br><span class="line">Tue Nov 17 11:14:15 2020 +0800 </span><br><span class="line">branch <span class="built_in">test</span> </span><br></pre></td></tr></table></figure>
+<h3 id="Git-配置文件"><a href="#Git-配置文件" class="headerlink" title="Git 配置文件"></a>Git 配置文件</h3><p>这些自定义的Git配置文件通常都存放在仓库的<code>.git/config</code>文件中：<br><strong>全局配置文件</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> .git/config </span><br><span class="line">[core] </span><br><span class="line">repositoryformatversion = 0 </span><br><span class="line">filemode = <span class="literal">true</span> </span><br><span class="line">bare = <span class="literal">false</span> </span><br><span class="line">logallrefupdates = <span class="literal">true</span> </span><br><span class="line">ignorecase = <span class="literal">true</span> </span><br><span class="line">precomposeunicode = <span class="literal">true</span> </span><br><span class="line">[remote <span class="string">&quot;origin&quot;</span>] </span><br><span class="line">url = git@codechina.csdn.net:codechina/learngit.git </span><br><span class="line">fetch = +refs/heads/*:refs/remotes/origin/* </span><br><span class="line">[branch <span class="string">&quot;master&quot;</span>] </span><br><span class="line">remote = origin merge = refs/heads/master </span><br><span class="line">[<span class="built_in">alias</span>] </span><br><span class="line">last = <span class="built_in">log</span> -1 </span><br></pre></td></tr></table></figure>
+<p>别名就在[alias]后面，要删除别名，直接把对应的行删掉即可。 而当前用户的 Git 配置文件放在用户主目录下的一个隐藏文件<code>.gitconfig</code>中：<br><strong>用户配置文件</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> .gitconfig </span><br><span class="line">[<span class="built_in">alias</span>] </span><br><span class="line">co = checkout </span><br><span class="line">ci = commit </span><br><span class="line">br = branch </span><br><span class="line">st = status </span><br><span class="line">[user] </span><br><span class="line">name = Your Name </span><br><span class="line">email = your@email.com </span><br><span class="line">[color] </span><br><span class="line">ui = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>配置别名也可以直接修改这个文件，如果改错了，可以删掉文件重新通过命令配置。</p>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">JaxShawn</div><div class="post-copyright__author_desc">接纳自己，拥抱他人，不要逃避</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="https://jaxshawn.github.io/2023/10/31/git%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6%EF%BC%88%E4%B8%80%EF%BC%89/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('https://jaxshawn.github.io/2023/10/31/git%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6%EF%BC%88%E4%B8%80%EF%BC%89/')">git——分布式管理系统的入门与进阶（一）</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"><div class="post-reward" onclick="anzhiyu.addRewardMask()"><div class="reward-button button--animated" title="赞赏作者"><i class="anzhiyufont anzhiyu-icon-hand-heart-fill"></i>打赏作者</div><div class="reward-main"><div class="reward-all"><span class="reward-title">感谢你赐予我前进的力量</span><ul class="reward-group"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul><a class="reward-main-btn" href="/about/#about-reward" target="_blank"><div class="reward-text">赞赏者名单</div><div class="reward-dec">因为你们的支持让我意识到写文章的价值🙏</div></a></div></div></div><div id="quit-box" onclick="anzhiyu.removeRewardMask()" style="display: none"></div></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="https://jaxshawn.github.io/2023/10/31/git%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6%EF%BC%88%E4%B8%80%EF%BC%89/"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=git——分布式管理系统的入门与进阶（一）&amp;url=https://jaxshawn.github.io/2023/10/31/git%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6%EF%BC%88%E4%B8%80%EF%BC%89/&amp;pic=" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://JaxShawn.github.io" target="_blank">JaxShawn</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/git/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>git<span class="tagsPageCount">7</span></a><a class="post-meta__box__tags" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>分布式管理系统<span class="tagsPageCount">7</span></a></div></div></div><div class="post_share"><div class="social-share" data-image="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/10/26/MQTT%E5%8D%8F%E8%AE%AE%E6%B5%85%E6%9E%90/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">MQTT协议浅析</div></div></a></div><div class="next-post pull-right"><a href="/2023/10/31/git%E2%80%94%E2%80%94%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6%EF%BC%88%E4%BA%8C%EF%BC%89/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">git——分布式管理系统的入门与进阶（二）</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/2023/10/31/git5/" title="git入门与进阶（五）"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2023-10-31</div><div class="title">git入门与进阶（五）</div></div></a></div><div><a href="/2023/10/31/git%E2%80%94%E2%80%94%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6%EF%BC%88%E4%BA%8C%EF%BC%89/" title="git——分布式管理系统的入门与进阶（二）"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2023-10-31</div><div class="title">git——分布式管理系统的入门与进阶（二）</div></div></a></div><div><a href="/2023/11/01/git%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6-%E4%B8%83/" title="git入门与进阶(七)"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2023-11-01</div><div class="title">git入门与进阶(七)</div></div></a></div><div><a href="/2023/11/01/git%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6-%E5%85%AD/" title="git入门与进阶(六)"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2023-11-01</div><div class="title">git入门与进阶(六)</div></div></a></div><div><a href="/2023/10/31/git%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6-%E5%9B%9B/" title="git入门与进阶(四)"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2023-10-31</div><div class="title">git入门与进阶(四)</div></div></a></div><div><a href="/2023/10/31/git%E5%85%A5%E9%97%A8%E4%B8%8E%E8%BF%9B%E9%98%B6%EF%BC%88%E4%B8%89%EF%BC%89/" title="git入门与进阶（三）"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2023-10-31</div><div class="title">git入门与进阶（三）</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/04/27/64496e511b09c.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__description">第一次逛卢浮宫的注意事项：  1.微笑； 2.想起心中的蒙娜丽莎； 3.one last kiss</div></div></div><div class="card-widget anzhiyu-right-widget" id="card-wechat" onclick="null"><div id="flip-wrapper"><div id="flip-content"><div class="face" style="background: url(https://bu.dusays.com/2023/01/13/63c02edf44033.png) center center / 100% no-repeat"></div><div class="back face" style="background: url(https://bu.dusays.com/2023/05/13/645fa415e8694.png) center center / 100% no-repeat"></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-number">1.</span> <span class="toc-text">版本控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%9A%84%E5%8F%91%E5%B1%95%E5%8E%86%E5%8F%B2"><span class="toc-number">2.</span> <span class="toc-text">版本控制的发展历史</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%A4%E5%91%A8%E6%97%B6%E9%97%B4%EF%BC%8C%E5%AE%8C%E6%88%90Git"><span class="toc-number">3.</span> <span class="toc-text">两周时间，完成Git</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E9%82%AE%E4%BB%B6%E5%9C%B0%E5%9D%80"><span class="toc-number">3.1.</span> <span class="toc-text">配置用户名和邮件地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9AGit-%E9%85%8D%E7%BD%AE"><span class="toc-number">4.</span> <span class="toc-text">更多Git 配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Git-%E9%A2%9C%E8%89%B2%E9%85%8D%E7%BD%AE"><span class="toc-number">4.1.</span> <span class="toc-text">Git 颜色配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git%E5%BF%BD%E7%95%A5%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="toc-number">4.2.</span> <span class="toc-text">Git忽略文件配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git-%E9%85%8D%E7%BD%AE%E5%88%AB%E5%90%8D"><span class="toc-number">4.3.</span> <span class="toc-text">Git 配置别名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-git-reset-HEAD-file"><span class="toc-number">4.4.</span> <span class="toc-text">配置 git reset HEAD file</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-git-log-1"><span class="toc-number">4.5.</span> <span class="toc-text">配置 git log -1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">4.6.</span> <span class="toc-text">Git 配置文件</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/12/12/HEXO%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/" title="HEXO博客搭建教程（一）">HEXO博客搭建教程（一）</a><time datetime="2023-12-12T11:10:50.000Z" title="发表于 2023-12-12 19:10:50">2023-12-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/10/iic%E7%A1%AC%E4%BB%B6%E5%8E%9F%E7%90%86%E5%8F%8A%E6%BA%90%E4%BB%A3%E7%A0%81/" title="iic硬件原理及源代码">iic硬件原理及源代码</a><time datetime="2023-11-10T07:39:03.000Z" title="发表于 2023-11-10 15:39:03">2023-11-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/06/GPIO%E6%8E%A5%E5%8F%A3%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" title="GPIO接口工作原理">GPIO接口工作原理</a><time datetime="2023-11-06T14:10:27.000Z" title="发表于 2023-11-06 22:10:27">2023-11-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/02/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" title="Linux系统编程">Linux系统编程</a><time datetime="2023-11-02T11:31:26.000Z" title="发表于 2023-11-02 19:31:26">2023-11-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/02/%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E3%80%81%E6%80%9D%E8%B7%AF%E3%80%81%E5%BF%83%E6%80%81%E7%9A%84%E9%95%BF%E6%9C%9F%E5%AD%98%E5%82%A8%EF%BC%88%E4%BF%9D%E6%8C%81%E6%9B%B4%E6%96%B0%EF%BC%89/" title="学习方法、思路、心态的长期存储（保持更新）">学习方法、思路、心态的长期存储（保持更新）</a><time datetime="2023-11-02T09:10:34.000Z" title="发表于 2023-11-02 17:10:34">2023-11-02</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2020 - 2024 By <a class="footer-bar-link" href="/" title="JaxShawn" target="_blank">JaxShawn</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">33</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">14</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blog.anheyu.com/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://image.anheyu.com/" title="安知鱼图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://image.anheyu.com/favicon.ico" alt="安知鱼图床"/><span class="back-menu-item-text">安知鱼图床</span></a></div></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/GPIO/" style="font-size: 0.88rem;">GPIO<sup>1</sup></a><a href="/tags/Inter-Integrated-Circuit%EF%BC%88%E5%86%85%E9%83%A8%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF%EF%BC%89/" style="font-size: 0.88rem;">Inter-Integrated Circuit（内部集成电路）<sup>1</sup></a><a href="/tags/LCD%E5%B1%8F%E5%B9%95/" style="font-size: 0.88rem;">LCD屏幕<sup>1</sup></a><a href="/tags/M4%E5%86%85%E6%A0%B8/" style="font-size: 0.88rem;">M4内核<sup>1</sup></a><a href="/tags/Markdown/" style="font-size: 0.88rem;">Markdown<sup>1</sup></a><a href="/tags/OLED%E5%B1%8F%E5%B9%95/" style="font-size: 0.88rem;">OLED屏幕<sup>1</sup></a><a href="/tags/git/" style="font-size: 0.88rem;">git<sup>7</sup></a><a href="/tags/http-https/" style="font-size: 0.88rem;">http/https<sup>1</sup></a><a href="/tags/mqtt/" style="font-size: 0.88rem;">mqtt<sup>1</sup></a><a href="/tags/stm32/" style="font-size: 0.88rem;">stm32<sup>1</sup></a><a href="/tags/tcp-ip/" style="font-size: 0.88rem;">tcp/ip<sup>1</sup></a><a href="/tags/%E4%B8%BB%E9%A2%98%E5%92%8C%E8%B4%9F%E8%BD%BD/" style="font-size: 0.88rem;">主题和负载<sup>1</sup></a><a href="/tags/%E4%BB%8B%E7%BB%8D/" style="font-size: 0.88rem;">介绍<sup>1</sup></a><a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" style="font-size: 0.88rem;">分布式管理系统<sup>7</sup></a><a href="/tags/%E5%88%A0%E9%99%A4/" style="font-size: 0.88rem;">删除<sup>1</sup></a><a href="/tags/%E5%8F%91%E5%B8%83%E5%92%8C%E8%AE%A2%E9%98%85/" style="font-size: 0.88rem;">发布和订阅<sup>1</sup></a><a href="/tags/%E5%AF%84%E5%AD%98%E5%99%A8/" style="font-size: 0.88rem;">寄存器<sup>1</sup></a><a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" style="font-size: 0.88rem;">嵌入式<sup>1</sup></a><a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F/" style="font-size: 0.88rem;">嵌入式系统<sup>1</sup></a><a href="/tags/%E5%B7%A5%E4%BD%9C%E5%8C%BA/" style="font-size: 0.88rem;">工作区<sup>1</sup></a><a href="/tags/%E5%BF%83%E6%83%85/" style="font-size: 0.88rem;">心情<sup>1</sup></a><a href="/tags/%E5%BF%83%E7%90%86/" style="font-size: 0.88rem;">心理<sup>1</sup></a><a href="/tags/%E6%80%9D%E7%BB%B4%E6%96%B9%E5%BC%8F/" style="font-size: 0.88rem;">思维方式<sup>1</sup></a><a href="/tags/%E6%80%BB%E7%BA%BF%E5%8D%8F%E8%AE%AE/" style="font-size: 0.88rem;">总线协议<sup>1</sup></a><a href="/tags/%E6%92%A4%E9%94%80%E4%BF%AE%E6%94%B9/" style="font-size: 0.88rem;">撤销修改<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">教程<sup>1</sup></a><a href="/tags/%E6%96%B9%E6%B3%95%E6%8A%80%E5%B7%A7/" style="font-size: 0.88rem;">方法技巧<sup>1</sup></a><a href="/tags/%E6%9A%82%E5%AD%98%E5%8C%BA/" style="font-size: 0.88rem;">暂存区<sup>1</sup></a><a href="/tags/%E6%BA%90%E4%BB%A3%E7%A0%81/" style="font-size: 0.88rem;">源代码<sup>1</sup></a><a href="/tags/%E7%89%A9%E7%90%86%E5%B1%82/" style="font-size: 0.88rem;">物理层<sup>1</sup></a><a href="/tags/%E7%AE%A1%E7%90%86%E4%BF%AE%E6%94%B9/" style="font-size: 0.88rem;">管理修改<sup>1</sup></a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" style="font-size: 0.88rem;">系统编程<sup>1</sup></a><a href="/tags/%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93/" style="font-size: 0.88rem;">远程仓库<sup>1</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.5/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("04/01/2021 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2020 By 安知鱼 V1.6.12",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 JaxShawn 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
